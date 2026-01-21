@@ -1,16 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-    <Button
-        android:paddingTop="40dp"
-        android:id="@+id/buttonOther"
+    <com.example.firstactivity.TitleLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+<!--    <include layout="@layout/title"></include>-->
+
+
+    <EditText
+        android:paddingTop="40dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="button2"/>
+        android:layout_weight="1"
+        android:text="Type something"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send"/>
+
+<!--    <Button-->
+<!--        android:paddingTop="40dp"-->
+<!--        android:id="@+id/buttonOther"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="top"-->
+<!--        android:text="button"/>-->
+
+
+<!--    <Button-->
+<!--        android:paddingTop="40dp"-->
+<!--        android:id="@+id/buttonOther1"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center_vertical"-->
+<!--        android:text="button2"/>-->
+
+
+<!--    <Button-->
+<!--        android:paddingTop="40dp"-->
+<!--        android:id="@+id/buttonOther2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom"-->
+<!--        android:text="button3"/>-->
 
 
 

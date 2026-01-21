@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class FirstActivity : AppCompatActivity() {
+class FirstActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.first_layout)
@@ -52,7 +52,15 @@ class FirstActivity : AppCompatActivity() {
 
         val finishBtn: Button = findViewById(R.id.finishBtn)
         finishBtn.setOnClickListener {
-            finish()
+            val intent = Intent(this, ThirdActivity::class.java)
+            startActivity(intent)
+           // finish()
+        }
+
+        val listViewBtn: Button = findViewById(R.id.listViewBtn)
+        listViewBtn.setOnClickListener {
+            val intent = Intent(this, ListViewTest::class.java)
+            startActivity(intent)
         }
     }
 

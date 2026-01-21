@@ -12,17 +12,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FirstActivity"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ListViewTest"
+            android:exported="false" />
+        <activity
+            android:name=".CustomViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RelativeLayoutActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FirstActivity" />
         <activity
             android:name=".ThirdActivity"
             android:exported="true">
             <intent-filter tools:ignore="AppLinkUrlError">
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="https"/>
-            </intent-filter>
-       </activity>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="https" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".SecondActivity"
             android:exported="true">

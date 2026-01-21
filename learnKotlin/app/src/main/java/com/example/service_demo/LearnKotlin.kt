@@ -2,6 +2,7 @@ package com.example.service_demo
 
 import com.example.service_demo.ui.theme.SingleTon
 import com.example.service_demo.ui.theme.Study
+import com.example.service_demo.ui.theme.Util
 
 fun main () {
     println("Hello Kotlin!")
@@ -49,6 +50,10 @@ fun main () {
 
     ///单例类
     SingleTon.singletonTest()
+
+    // 静态工具方法
+    Util.doAction2()
+
 
     //Lambam
     val list = mutableListOf("Apple", "Banana", "Orange", "Pear", "Geape")
