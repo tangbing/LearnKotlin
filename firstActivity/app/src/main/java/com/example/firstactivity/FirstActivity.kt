@@ -1,17 +1,13 @@
 package com.example.firstactivity
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.example.firstactivity.customListView.CustomListViewActivity
 
 class FirstActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,9 +53,17 @@ class FirstActivity : BaseActivity() {
            // finish()
         }
 
+        // 系统 listview
         val listViewBtn: Button = findViewById(R.id.listViewBtn)
         listViewBtn.setOnClickListener {
             val intent = Intent(this, ListViewTest::class.java)
+            startActivity(intent)
+        }
+
+        // 自定义 cell custom listview
+        val customListViewBtn: Button = findViewById(R.id.customListViewBtn)
+        customListViewBtn.setOnClickListener {
+            val intent = Intent(this, CustomListViewActivity::class.java)
             startActivity(intent)
         }
     }

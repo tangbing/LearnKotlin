@@ -13,6 +13,9 @@
         android:theme="@style/Theme.FirstActivity"
         tools:targetApi="31">
         <activity
+            android:name=".customListView.CustomListViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".ListViewTest"
             android:exported="false" />
         <activity
