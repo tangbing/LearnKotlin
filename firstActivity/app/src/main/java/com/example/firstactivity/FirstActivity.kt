@@ -7,7 +7,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.example.firstactivity.customListView.CustomListViewActivity
+import com.example.firstactivity.horRecyclerView.HorRecyclerViewActivity
+import com.example.firstactivity.recyclerView.RecyclerViewActivity
 
 class FirstActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +66,14 @@ class FirstActivity : BaseActivity() {
         // 自定义 cell custom listview
         val customListViewBtn: Button = findViewById(R.id.customListViewBtn)
         customListViewBtn.setOnClickListener {
-            val intent = Intent(this, CustomListViewActivity::class.java)
+            val intent = Intent(this, RecyclerViewActivity::class.java)
+            startActivity(intent)
+        }
+
+        // 自定义 cell custom listview
+        val horRecyclerViewBtn: Button = findViewById(R.id.hor_RecyclerViewBtn)
+        horRecyclerViewBtn.setOnClickListener {
+            val intent = Intent(this, HorRecyclerViewActivity::class.java)
             startActivity(intent)
         }
     }

@@ -13,8 +13,13 @@
         android:theme="@style/Theme.FirstActivity"
         tools:targetApi="31">
         <activity
-            android:name=".customListView.CustomListViewActivity"
+            android:name=".horRecyclerView.HorRecyclerViewActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".recyclerView.RecyclerViewActivity"
+            android:exported="true" />
+
         <activity
             android:name=".ListViewTest"
             android:exported="false" />
@@ -46,12 +51,14 @@
                 <category android:name="com.example.firstactivity.MY_CATEGORY" />
             </intent-filter>
         </activity>
+        <!--   exported         是否允许外部启动-->
         <activity
             android:name=".FirstActivity"
             android:exported="true">
+<!--            Activity 能响应什么intent-->
             <intent-filter>
+<!--                main + launcher： App的桌面入口-->
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

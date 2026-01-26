@@ -20,16 +20,24 @@
 
 
     <Button
-        android:id="@+id/customListViewBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="custom listView"/>
-
-
-    <Button
         android:id="@+id/listViewBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="listViewBtn"/>
+
+    <Button
+        android:id="@+id/customListViewBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="RecyclerView"/>
+
+
+    <Button
+        android:id="@+id/hor_RecyclerViewBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="HorRecyclerView"/>
+
+
 
 </LinearLayout>
