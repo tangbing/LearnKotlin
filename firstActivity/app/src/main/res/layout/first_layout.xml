@@ -38,6 +38,12 @@
         android:layout_height="wrap_content"
         android:text="HorRecyclerView"/>
 
+    <Button
+        android:id="@+id/chat_RecyclerViewBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="chat RecyclerView"/>
+
 
 
 </LinearLayout>

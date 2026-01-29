@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.example.firstactivity.R
 
 
@@ -21,7 +22,18 @@ class FruitAdapter(private val fruitList: List<Fruit>) : RecyclerView.Adapter<Fr
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FruitAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.hor_fruit_item, parent, false)
-        return ViewHolder(view)
+        val viewHolder = ViewHolder(view)
+        viewHolder.itemView.setOnClickListener {
+            val position = viewHolder.adapterPosition
+            val fruit = fruitList[position]
+            Toast.makeText(parent.context, "you clicked view ${fruit.name}", Toast.LENGTH_SHORT).show()
+        }
+        viewHolder.fruitImage.setOnClickListener {
+            val position = viewHolder.adapterPosition
+            val fruit = fruitList[position]
+            Toast.makeText(parent.context, "you clicked image: ${fruit.name}", Toast.LENGTH_SHORT).show()
+        }
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: FruitAdapter.ViewHolder, position: Int) {

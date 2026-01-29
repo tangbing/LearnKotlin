@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.firstactivity.chat.ChatRecyclerActivity
 import com.example.firstactivity.customListView.CustomListViewActivity
 import com.example.firstactivity.horRecyclerView.HorRecyclerViewActivity
 import com.example.firstactivity.recyclerView.RecyclerViewActivity
@@ -74,6 +75,13 @@ class FirstActivity : BaseActivity() {
         val horRecyclerViewBtn: Button = findViewById(R.id.hor_RecyclerViewBtn)
         horRecyclerViewBtn.setOnClickListener {
             val intent = Intent(this, HorRecyclerViewActivity::class.java)
+            startActivity(intent)
+        }
+
+
+        val chat_RecyclerViewBtn: Button = findViewById(R.id.chat_RecyclerViewBtn)
+        chat_RecyclerViewBtn.setOnClickListener {
+            val intent = Intent(this, ChatRecyclerActivity::class.java)
             startActivity(intent)
         }
     }
