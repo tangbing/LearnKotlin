@@ -13,18 +13,18 @@ class MainActivity : AppCompatActivity() {
 
         // 在 Activity 中得到相应的 Fragment 实例
         val leftFrg = supportFragmentManager.findFragmentById(R.id.leftFrag) as LeftFragment
-        leftFrg.button.setOnClickListener {
-            replaceFragment(AnotherRightFragment())
-        }
-        replaceFragment(RightFragment())
+//        leftFrg.button.setOnClickListener {
+//            replaceFragment(AnotherRightFragment())
+//        }
+        //ccreplaceFragment(RightFragment())
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        val fragmentManager = supportFragmentManager
-        val transaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.rightLayout,fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
+//    private fun replaceFragment(fragment: Fragment) {
+//        val fragmentManager = supportFragmentManager
+//        val transaction = fragmentManager.beginTransaction()
+//        transaction.replace(R.id.rightLayout,fragment)
+//        transaction.addToBackStack(null)
+//        transaction.commit()
+//    }
 
 }

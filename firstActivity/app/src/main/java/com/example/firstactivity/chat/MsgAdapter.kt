@@ -23,17 +23,17 @@ class MsgAdapter(val msgList: List<Msg>): RecyclerView.Adapter<MsgViewHolder>() 
         RightViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: MsgViewHolder,
+        position: Int
+    ) {
         val msg = msgList[position]
         when (holder) {
             is LeftViewHolder -> holder.leftMsg.text = msg.content
             is RightViewHolder -> holder.rightMsg.text = msg.content
         }
-
     }
 
     override fun getItemCount(): Int = msgList.size
-
-
 
 }

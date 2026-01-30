@@ -18,6 +18,8 @@ class FirstActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.first_layout)
 
+
+
         val button1: Button = findViewById(R.id.button1)
         button1.setOnClickListener {
             Toast.makeText(this, "click me", Toast.LENGTH_SHORT).show()
