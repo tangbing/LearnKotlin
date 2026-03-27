@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "service_demo"
 include(":app")
+include(":console")
  
