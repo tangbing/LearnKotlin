@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "WebViewTest"
 include(":app")
+include(":playground")
  
