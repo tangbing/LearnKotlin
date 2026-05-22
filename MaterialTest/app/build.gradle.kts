@@ -38,6 +38,9 @@ android {
 }
 
 dependencies {
+    implementation("androidx.recyclerview:recyclerview:1.0.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0")
     implementation(libs.google.material)
     implementation(libs.hdodenhof.circleimageview)
     implementation(libs.androidx.appcompat)
@@ -50,6 +53,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

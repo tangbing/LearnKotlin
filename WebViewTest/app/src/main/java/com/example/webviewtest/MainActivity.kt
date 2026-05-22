@@ -1,9 +1,19 @@
 package com.example.webviewtest
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.os.Bundle
+import android.os.Message
 import android.util.Log
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -24,57 +34,162 @@ import java.net.URL
 import kotlin.concurrent.thread
 
 private const val TAG = "MainActivity"
-private const val TARGET_URL = "https://juejin.cn/user/207173399875662"
+private const val TARGET_URL = "https://cashier.hkwinninggroup.com/2052556658692853760?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjIwNTI1NTY2NTg2OTI4NTM3NjAiLCJyb2xlIjoiY2FzaGllciIsImV4cCI6MTc3ODI4OTAxNn0.jBpejZoGB4oLqE0LNnZwFblISjbOGiFq3npv0VNdBpg"
 
 class MainActivity : AppCompatActivity() {
     private lateinit var responseText: TextView
-
-//    val webView = findViewById<WebView>(R.id.button)
+    private lateinit var webView: WebView
     private lateinit var sendRequestBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_main)
 
-        responseText = findViewById<TextView>(R.id.responseText)
-        sendRequestBtn = findViewById<Button>(R.id.sendRequestBtn)
+//        responseText = findViewById<TextView>(R.id.responseText)
+//        sendRequestBtn = findViewById<Button>(R.id.sendRequestBtn)
+        webView = findViewById<WebView>(R.id.webView)
 
 
-        var getAppData = findViewById<Button>(R.id.getAppDataBtn)
-        getAppData.setOnClickListener {
-            sendRetrofitRequest()
-        }
-
-
-        sendRequestBtn.setOnClickListener {
-            //sendRequestWithHttpURLConnect()
-
-           // sendJSonRequestWithOkHttp()
-
-           // sendCustomRequest()
-
-            sendOkHttpRequest()
-
-        }
-
-
-
-//        webView.settings.javaScriptEnabled = true
-//        webView.settings.domStorageEnabled = true
-//        webView.webViewClient = object : WebViewClient() {
-//            override fun onReceivedError(
-//                view: WebView?,
-//                request: WebResourceRequest?,
-//                error: WebResourceError?
-//            ) {
-//                super.onReceivedError(view, request, error)
-//                Log.e(
-//                    TAG,
-//                    "WebView error: code=${error?.errorCode}, description=${error?.description}, url=${request?.url}"
-//                )
-//            }
+//        var getAppData = findViewById<Button>(R.id.getAppDataBtn)
+//        getAppData.setOnClickListener {
+//            sendRetrofitRequest()
 //        }
-//        webView.loadUrl(TARGET_URL)
+//
+//
+//        sendRequestBtn.setOnClickListener {
+//            //sendRequestWithHttpURLConnect()
+//
+//           // sendJSonRequestWithOkHttp()
+//
+//           // sendCustomRequest()
+//
+//            sendOkHttpRequest()
+//
+//        }
+
+
+
+        configureWebView()
+        webView.webChromeClient = object : WebChromeClient() {
+            override fun onCreateWindow(
+                view: WebView?,
+                isDialog: Boolean,
+                isUserGesture: Boolean,
+                resultMsg: Message?
+            ): Boolean {
+                val transport = resultMsg?.obj as? WebView.WebViewTransport ?: return false
+                transport.webView = WebView(this@MainActivity).apply {
+                    settings.javaScriptEnabled = true
+                    webViewClient = object : WebViewClient() {
+                        override fun shouldOverrideUrlLoading(
+                            view: WebView?,
+                            request: WebResourceRequest?
+                        ): Boolean {
+                            return handleExternalScheme(request?.url?.toString())
+                        }
+
+                        override fun shouldOverrideUrlLoading(
+                            view: WebView?,
+                            url: String?
+                        ): Boolean {
+                            return handleExternalScheme(url)
+                        }
+                    }
+                }
+                resultMsg.sendToTarget()
+                return true
+            }
+        }
+        webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean {
+                return handleExternalScheme(request?.url?.toString())
+            }
+
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                url: String?
+            ): Boolean {
+                return handleExternalScheme(url)
+            }
+
+            override fun onReceivedError(
+                view: WebView?,
+                request: WebResourceRequest?,
+                error: WebResourceError?
+            ) {
+                super.onReceivedError(view, request, error)
+                Log.e(
+                    TAG,
+                    "WebView error: code=${error?.errorCode}, description=${error?.description}, url=${request?.url}"
+                )
+            }
+        }
+        webView.loadUrl(TARGET_URL)
+
+    }
+
+    private fun configureWebView() {
+        webView.settings.apply {
+            javaScriptEnabled = true
+            domStorageEnabled = true
+            cacheMode = WebSettings.LOAD_DEFAULT
+            javaScriptCanOpenWindowsAutomatically = true
+            setSupportMultipleWindows(true)
+        }
+    }
+
+    private fun handleExternalScheme(url: String?): Boolean {
+        if (url.isNullOrBlank()) {
+            return false
+        }
+
+        val lowerUrl = url.lowercase()
+        if (
+            lowerUrl.startsWith("http://") ||
+            lowerUrl.startsWith("https://") ||
+            lowerUrl.startsWith("about:") ||
+            lowerUrl.startsWith("javascript:")
+        ) {
+            return false
+        }
+
+        return try {
+            val intent = if (lowerUrl.startsWith("intent://")) {
+                Intent.parseUri(url, Intent.URI_INTENT_SCHEME).apply {
+                    addCategory(Intent.CATEGORY_BROWSABLE)
+                    component = null
+                    selector = null
+                }
+            } else {
+                Intent(Intent.ACTION_VIEW).apply {
+                    data = android.net.Uri.parse(url)
+                    addCategory(Intent.CATEGORY_BROWSABLE)
+                }
+            }
+
+            startActivity(intent)
+            true
+        } catch (e: ActivityNotFoundException) {
+            val fallbackUrl = runCatching {
+                Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
+                    .getStringExtra("browser_fallback_url")
+            }.getOrNull()
+
+            if (!fallbackUrl.isNullOrBlank()) {
+                webView.loadUrl(fallbackUrl)
+            } else {
+                Toast.makeText(this, "未找到可处理该支付跳转的应用", Toast.LENGTH_SHORT).show()
+            }
+
+            Log.w(TAG, "No app can handle url: $url", e)
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to open external scheme: $url", e)
+            true
+        }
     }
 
     private fun sendRetrofitRequest() {
