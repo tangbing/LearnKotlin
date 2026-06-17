@@ -1,12 +1,12 @@
 package com.example.sunnyweather.Logic
 
+import android.util.Log
 import androidx.lifecycle.liveData
+import com.example.sunnyweather.Logic.dao.PlaceDao
 import com.example.sunnyweather.Logic.model.Place
 import com.example.sunnyweather.Logic.model.Weather
 import com.example.sunnyweather.Logic.network.SunnyWeatherNetwork
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlin.coroutines.CoroutineContext
 
 object Repository {
@@ -14,6 +14,7 @@ object Repository {
         val placeResponse = SunnyWeatherNetwork.searchPlaces(query)
         if (placeResponse.status == "ok") {
             val places = placeResponse.places
+            Log.d("searchPlaces success", "placeResponse  response status is ${placeResponse.status}")
             Result.success(places)
         } else {
             Result.failure(RuntimeException("response status is ${placeResponse.status} "))
@@ -21,28 +22,13 @@ object Repository {
     }
 
     fun refreshWeather(lng: String, lat: String) = fire(Dispatchers.IO) {
-        coroutineScope {
-            val deferredRealtime = async {
-                SunnyWeatherNetwork.getRealtimeWeather(lng, lat)
-            }
-
-            val deferredDaily = async {
-                SunnyWeatherNetwork.getDailyWeather(lng, lat)
-            }
-
-            val realtimeResponse = deferredRealtime.await()
-            val dailyResponse = deferredDaily.await()
-            if (realtimeResponse.status == "ok" && dailyResponse.status == "ok") {
-                val weather = Weather(realtimeResponse.result.realtime, dailyResponse.result.daily)
-                Result.success(weather)
-            } else {
-                Result.failure(
-                    RuntimeException(
-                        "Realtime  response status is ${realtimeResponse.status}" +
-                                "daily  response status is ${dailyResponse.status}"
-                    )
-                )
-            }
+        val weatherResponse = SunnyWeatherNetwork.getWeather(lng, lat)
+        Log.d("refreshWeather success", "weather response status is ${weatherResponse.status}")
+        if (weatherResponse.status == "ok") {
+            val weather = Weather(weatherResponse.result.realtime, weatherResponse.result.daily)
+            Result.success(weather)
+        } else {
+            Result.failure(RuntimeException("weather response status is ${weatherResponse.status}"))
         }
     }
 
@@ -54,4 +40,10 @@ object Repository {
         }
         emit(result)
     }
+
+    fun savePlace(place: Place) = PlaceDao.savePlace(place)
+
+    fun getSavedPlace() = PlaceDao.getSavedPlace()
+
+    fun isPlaceSaved() = PlaceDao.isPlaceSaved()
 }

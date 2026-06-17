@@ -9,9 +9,9 @@ class SunnyWeatherApplication : Application() {
         @SuppressLint("StaticFieldLeak")
         lateinit var context: Context
 
-        const val TOKEN = "BNBRvBveaD2VfHVI"
+        const val TOKEN = "2VERyVtoc8804KfT"
     }
-
+//    https://api.caiyunapp.com/v2.5/BNBRvBveaD2VfHVI/114.298572,30.584355/realtime
     override fun onCreate() {
         super.onCreate()
         context = applicationContext

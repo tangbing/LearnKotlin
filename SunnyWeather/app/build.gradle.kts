@@ -5,9 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.sunnyweather"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.sunnyweather"
@@ -19,8 +17,18 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("../sunner_weather_upload.jks")
+            storePassword = "qqq111"
+            keyAlias = "SunneyWeather"
+            keyPassword = "qqq111"
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
