@@ -35,22 +35,20 @@ class PlaceFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_place, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         if (activity is MainActivity && viewModel.isPlaceSaved()) {
             val place = viewModel.getSavePlace()
-            val intent = Intent(context, WeatherActivity::class.java).apply {
+            val intent = Intent(requireContext(), WeatherActivity::class.java).apply {
                 putExtra("location_lng", place.location.lng)
                 putExtra("location_lat", place.location.lat)
                 putExtra("place_name", place.name)
             }
             startActivity(intent)
             activity?.finish()
+            return
         }
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.recyclerView)
         bgImageView = view.findViewById(R.id.bgImageView)
         searchPlaceEdit = view.findViewById<TextView>(R.id.searchPlaceEdit)
@@ -81,7 +79,7 @@ class PlaceFragment : Fragment() {
                 viewModel.placeList.addAll(places)
                 adapter.notifyDataSetChanged()
             } else {
-                Toast.makeText(activity, "未能查询到任何地点", Toast.LENGTH_SHORT)
+                Toast.makeText(activity, "未能查询到任何地点", Toast.LENGTH_SHORT).show()
                 result.exceptionOrNull()?.printStackTrace()
             }
         })
