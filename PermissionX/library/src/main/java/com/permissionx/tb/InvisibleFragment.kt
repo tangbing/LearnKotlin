@@ -12,8 +12,10 @@ class InvisibleFragment : Fragment() {
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
             val deniedList = results.filterValues { !it }.keys.toList()
+
             callback?.invoke(deniedList.isEmpty(), deniedList)
             callback = null
+
         }
 
     fun requestNow(cb: PermissionCallback, vararg permissions: String) {
